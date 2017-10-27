@@ -1,0 +1,15 @@
+{
+  "name": "hid-midi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Wojciech Wozniak <wwozniak92@gmail.com> (http://github.com/wojtekw92)",
+  "license": "ISC",
+  "dependencies": {
+    "midi": "^0.9.5",
+    "node-hid": "^0.5.7"
+  }
+}
