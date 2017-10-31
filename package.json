@@ -9,6 +9,8 @@
   "author": "Wojciech Wozniak <wwozniak92@gmail.com> (http://github.com/wojtekw92)",
   "license": "ISC",
   "dependencies": {
+    "commander": "^2.11.0",
+    "console.table": "^0.9.1",
     "midi": "^0.9.5",
     "node-hid": "^0.5.7"
   }

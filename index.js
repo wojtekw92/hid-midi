@@ -1,12 +1,45 @@
-var HID = require('node-hid');
+const HID = require('node-hid');
+const midi = require('midi');
+require('console.table');
 var devices = HID.devices();
-var midi = require('midi');
-
 // Set up a new output.
+var program = require('commander');
+
+program
+ .version('0.1.0')
+ .option('-l, --list', 'list HID devices')
+ .option('-v, --vid <n>', 'USB device vendor ID', parseInt)
+ .option('-p, --pid <n>', 'USB device product ID', parseInt)
+ .option('-m, --midi [name]', 'Set virtual midi output name [Test output]', 'Test output')
+ .option('-c, --config [name]', 'load config file [config.json]', 'config.json')
+ .option('-o, --open', 'open midi device') 
+ .option('-r, --raw', 'RAW output of USB device')
+ .parse(process.argv);
+
+ if (program.list) {
+    var devices = HID.devices();
+    console.table(devices);
+ } else if (program.raw) {
+     if (!program.vid || !program.pid) {
+         console.log('You have to specify vid and pid to use raw output');
+     } else {
+        let device = new HID.HID(program.vid, program.pid);
+        device.on("data", function(data) {
+            for (var i=0;i<data.length;i++) {
+                if(data[i]>0) {
+                    console.log(data[i]);
+                }
+            }
+        });
+     }
+ } else if (program.open) {
+     if (!program.vid || !program.pid) {
+         console.log('You have to set vid and pid to open miti')
+     }
+ }
 var output = new midi.output();
 output.openVirtualPort("Test output");
-console.log(devices);
-
+/*
 var device = new HID.HID('0003:000c:00');
 
 var codes = [];
@@ -59,4 +92,4 @@ device.on("data", function(data) {
             }
         }
     }
-});
+});*/
